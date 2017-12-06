@@ -4,15 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class contactsapp {
+public class ContactManager {
+
+
 
     public static void main(String[] args) {
         System.out.println("*****Welcome to Contacts Manager*****");
-        System.out.println("[Main Menu] Press: A Add Contact - S Search Contact - D Delete");
+        System.out.println("1. View Contacts - 2. Add Contact - 3. Search Contact - 4. Delete - 5. Exit");
+        System.out.println("----------------------------------------------------------------------------");
 
-        Input userResponse = new Input();
-        userResponse.getString("Enter a phone number");
+//        Input userResponse = new Input();
+//        userResponse.getString("Enter an option 1, 2, 3, 4 or 5: ");
 
+        String userInput;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter an option: ");
+        userInput = sc.nextLine();
+        System.out.println("You entered: --> \"" + userInput + "\" <--");
+
+
+        Path contactsPath = Paths.get("data", "contacts.txt");
 
         try {
             writeContactsToFile();

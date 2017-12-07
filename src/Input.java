@@ -15,6 +15,10 @@ public class Input {
         System.out.println(prompt);
         return this.scan.nextLine();
     }
+
+    public int getInt(int i, int i1) {
+
+    }
 //
 //
 //    public boolean yesNo() {

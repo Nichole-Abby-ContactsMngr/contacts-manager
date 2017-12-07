@@ -1,5 +1,3 @@
-import util.*;
-
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -33,8 +31,8 @@ public class ContactManager {
                 addContact(contacts);
             } else if (userChoice == 3) {
                 searchContact(contacts);
-            } else if (userChoice == 4) {
-                deleteContact(contacts);
+//            } else if (userChoice == 4) {
+//                deleteContact(contacts);
             }
 
             System.out.println();
@@ -67,7 +65,6 @@ public class ContactManager {
             }
         }
 
-
         try {
             contactsStrings = Files.readAllLines(dataFile);
         } catch (IOException e) {
@@ -75,9 +72,10 @@ public class ContactManager {
         }
 
         if (contactsStrings.size() == 0) {
-            contactsStrings.add("Another name,9154715340");
-            contactsStrings.add("Some Else,2543689782");
-            contactsStrings.add("Mickey Mouse,2019135865");
+            contactsStrings.add("Amy B, 123-123-1234");
+            contactsStrings.add("Billy C, 234-234-2345");
+            contactsStrings.add("Chris D 345-345-3456");
+            contactsStrings.add("Diana E, 456-456-4567");
             //having append here adds to our file instead of overriding it
 //        Files.write(dataFile, contactsStrings, StandardOpenOption.APPEND);
             try {
@@ -85,10 +83,8 @@ public class ContactManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
-
 
     public static List<Contacts> readAllContacts() {
         String directory = "data";
@@ -101,7 +97,6 @@ public class ContactManager {
         try {
             contactsStrings = Files.readAllLines(dataFile);
 
-//            enhanced for loop to iterate our list of strings
             for (String person : contactsStrings) {
                 name = person.substring(0, person.indexOf(","));
                 phoneNumber = person.substring(person.indexOf(",") + 1);
@@ -121,55 +116,20 @@ public class ContactManager {
 
     public static void showAll(List<Contacts> contacts) {
 
-        int width = 20;
-
-        System.out.printf("%-" + width + "s| ", "Name");
-        System.out.printf("%-" + width + "s|%n ", "Phone number");
-        System.out.println("------------------------------------------");
+        System.out.printf("Name");
+        System.out.printf("Phone number");
 
         for (Contacts contact : contacts) {
-            System.out.printf("%-" + width + "s| ", contact.getName());
-            System.out.printf("(" + contact.getPhoneNumber().substring(0, 3) + ")");
+            System.out.printf(contact.getName());
+            System.out.printf(contact.getPhoneNumber().substring(0, 3));
             System.out.printf(contact.getPhoneNumber().substring(3, 6));
-            System.out.printf("-" + contact.getPhoneNumber().substring(6));
-            System.out.printf("       |\n");
+            System.out.printf(contact.getPhoneNumber().substring(6));
         }
     }
-
-    public static void addContact(List<Contacts> contacts) {
-        System.out.println("Enter contact's name.");
-        Input input = new Input();
-        String nameInput = input.getString();
-        String phoneNumberInput = input.getString("Enter contact's phone number.");
-        Contacts contactToAdd = new Contacts(nameInput, phoneNumberInput);
-        contacts.add(contactToAdd);
-        System.out.println("Contact added.");
-    }
-
-    public static void deleteContact(List<Contacts> contacts) {
-        System.out.println("Enter contact's name to delete");
-        Input input = new Input();
-        String nameInput = input.getString();
-        boolean found = false;
-
-        for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).getName().equalsIgnoreCase(nameInput)) {
-                System.out.println("Contact Removed");
-                contacts.remove(i);
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println("Contact not found.");
-            found = false;
-        }
-    }
-
 
     public static void searchContact(List<Contacts> contacts) {
 
-        System.out.println("Enter contact's name to search");
+        System.out.println("Enter the name to search");
         Input input = new Input();
         String nameInput = input.getString();
         boolean found = false;
@@ -182,10 +142,21 @@ public class ContactManager {
             }
         }
         if (!found) {
-            System.out.println("Contact not found.");
+            System.out.println("That contact doesn't exist");
             found = false;
         }
     }
+
+    public static void addContact(List<Contacts> contacts) {
+        System.out.println("Enter contact's name");
+        Input input = new Input();
+        String nameInput = input.getString();
+        String phoneNumberInput = input.getString("Enter the contact's phone number");
+        Contacts contactToAdd = new Contacts(nameInput, phoneNumberInput);
+        contacts.add(contactToAdd);
+        System.out.println("Contact added!");
+    }
+
 
     public static void updateFile(List<Contacts> contacts) {
 
@@ -223,74 +194,3 @@ public class ContactManager {
         }
     }
 }
-
-
-
-
-
-
-
-
-//
-//
-////method to show menu do while loop. always going to show unless user wants to exit
-//
-//
-////        Input userResponse = new Input();
-////        userResponse.getString("Enter an option 1, 2, 3, 4 or 5: ");
-//    public static void showMenu() {
-//        System.out.println("1. View Contacts");
-//        System.out.println("2. Add Contact");
-//        System.out.println("3. Search Contact");
-//        System.out.println("4. Delete");
-//        System.out.println("5. Exit");
-//
-//
-//    }
-//
-//    Path contactsPath = Paths.get("data", "contacts.txt");
-//
-//    //psvm then do while loop for all methods
-//    //here write main method for public static void showMenu(), then showAll contacts, addContact, searchContact, deleteContact, exit
-//
-//    public static void writeContactsToFile() throws IOException {
-//        String directory = "data";
-//        String filename = "contacts.txt";
-//        Path dataDirectory = Paths.get(directory);
-//        Path dataFile = Paths.get(directory, filename);
-//
-//        if (Files.notExists(dataDirectory)) {
-//            Files.createDirectories(dataDirectory);
-//        }
-//
-//        if (!Files.exists(dataFile)) {
-//            Files.createFile(dataFile);
-//        }
-//
-//        ArrayList<String> contacts = new ArrayList<>();
-//        contacts.add("Amy, 222-222-2222");
-//        contacts.add("Bill, 444-444-4444");
-//        contacts.add("Carl, 888-888-8888");
-//
-//        Files.write(dataFile, contacts);
-//    }
-//
-//    public static List<Contacts> readAllContacts() {
-//        String directory = "data";
-//        String filename = "contacts.txt";
-//        Path dataDirectory = Paths.get(directory);
-//        Path dataFile = Paths.get(directory, filename);
-//        List<Contacts> listOfContacts = new ArrayList<>();
-//        String name, phoneNumber;
-//
-//        try {
-//            contactsStrings = Files.readAllLines(dataFile);
-//            contacts = Files.readAllLines(dataFile);
-//            for (String person : contacts) {
-//                System.out.println(contacts);
-//            }
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//}

@@ -10,34 +10,30 @@ public class ContactManager {
 //        System.out.println("1. View Contacts - 2. Add Contact - 3. Search Contact - 4. Delete - 5. Exit");
         System.out.println("----------------------------------------------------------------------------");
 
-
         List<Contacts> contacts = new ArrayList<>();
         Input input = new Input();
-        int userChoice;
-
+        int userInput;
         writeContactsToFile();
-
-        contacts = readAllContacts();
-
+        contacts = viewAllContacts();
 
         do {
             showMenu();
             System.out.println("Enter an option: ");
-            userChoice = input.getInt(1, 5);
+            userInput = input.getInt(1, 5);
 
-            if (userChoice == 1) {
+            if (userInput == 1) {
                 showAll(contacts);
-            } else if (userChoice == 2) {
+            } else if (userInput == 2) {
                 addContact(contacts);
-            } else if (userChoice == 3) {
+            } else if (userInput == 3) {
                 searchContact(contacts);
-//            } else if (userChoice == 4) {
+//            } else if (userInput == 4) {
 //                deleteContact(contacts);
             }
 
             System.out.println();
 
-        } while (!(userChoice == 5));
+        } while (!(userInput == 5));
         updateFile(contacts);
         System.out.println("Laterzzz");
     }
@@ -86,7 +82,7 @@ public class ContactManager {
         }
     }
 
-    public static List<Contacts> readAllContacts() {
+    public static List<Contacts> viewAllContacts() {
         String directory = "data";
         String filename = "contacts.txt";
         Path dataFile = Paths.get(directory, filename);

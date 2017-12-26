@@ -28,7 +28,7 @@ public class Contacts {
             this.phoneNumber = phoneNumber;
         }
 
-
+        public void displayContact() {
+            System.out.println(this.getName() + " " + this.getPhoneNumber());
+        }
     }
-
-

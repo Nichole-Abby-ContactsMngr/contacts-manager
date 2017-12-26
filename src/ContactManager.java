@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ContactManager {
 
@@ -82,6 +83,16 @@ public class ContactManager {
         }
     }
 
+    public static String capitalize(String text) {
+        String c = (text != null) ? text.trim() : "";
+        String[] words = c.split(" ");
+        String result = "";
+        for (String w : words) {
+            result += (w.length() > 1 ? w.substring(0, 1).toUpperCase(Locale.US) + w.substring(1, w.length()).toLowerCase(Locale.US) : w) + " ";
+        }
+        return result.trim();
+    }
+
     public static List<Contacts> viewAllContacts() {
         String directory = "data";
         String filename = "contacts.txt";
@@ -152,6 +163,41 @@ public class ContactManager {
         contacts.add(contactToAdd);
         System.out.println("Contact added!");
     }
+
+    public static Boolean checkForExisting(List<Contacts> contacts, String nameInput) {
+
+        boolean found = false;
+
+        for (Contacts contact : contacts) {
+            if (contact.getName().equalsIgnoreCase(nameInput)) {
+                found = true;
+            }
+        }
+        return found;
+
+    }
+
+
+    public static void deleteContact(List<Contacts> contacts) {
+        System.out.println("Enter contact's name to delete");
+        Input input = new Input();
+        String nameInput = input.getString();
+        boolean found = false;
+
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).getName().equalsIgnoreCase(nameInput)) {
+                System.out.println("Contact Removed");
+                contacts.get(i).displayContact();
+                contacts.remove(i);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Contact not found.");
+        }
+    }
+
 
 
     public static void updateFile(List<Contacts> contacts) {
